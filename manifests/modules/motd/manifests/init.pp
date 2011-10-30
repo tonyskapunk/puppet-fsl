@@ -1,6 +1,10 @@
 class motd {
+  $motd_file = $operatingsystem ? {
+    /(CentOS|RedHat|Fedora)/ => '/etc/motd',
+    /(Debian|Ubuntu)/        => '/etc/motd.tail'
+  }
   file {
-    "/etc/motd":
+    "$motd_file":
       content => template("motd/motd.erb");
   }
 }
